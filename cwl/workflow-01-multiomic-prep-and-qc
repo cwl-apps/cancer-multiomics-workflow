@@ -1,0 +1,105 @@
+cwlVersion: v1.2
+class: Workflow
+label: MOGSA Prep v2
+$namespaces:
+  sbg: https://sevenbridges.com
+
+requirements:
+- class: InlineJavascriptRequirement
+- class: StepInputExpressionRequirement
+
+inputs:
+- id: phospho_protein
+  type: File
+  sbg:fileTypes: TSV
+  sbg:x: 3
+  sbg:y: -100
+- id: global_protein
+  type: File
+  sbg:fileTypes: TSV
+  sbg:x: 0
+  sbg:y: 212.8125
+- id: mrna_quant
+  type: File?
+  sbg:x: -16
+  sbg:y: 34.40625
+
+outputs: []
+
+steps:
+- id: process_phospho_protein
+  label: Process Phospho Protein
+  in:
+  - id: phospho_protein
+    source: phospho_protein
+  run: workflow-01-multiomic-prep-and-qc.steps/process_phospho_protein.cwl
+  out:
+  - id: processed_phospho_protein_file
+  sbg:x: 251.59375
+  sbg:y: -65.796875
+- id: process_global_protein
+  label: process global protein
+  in:
+  - id: global_protein
+    source: global_protein
+  run: workflow-01-multiomic-prep-and-qc.steps/process_global_protein.cwl
+  out:
+  - id: processed_global_protein
+  sbg:x: 227.59375
+  sbg:y: 203.609375
+- id: mogsa_prep_v2_1
+  label: Multiple Data Type Quality Control
+  in:
+  - id: global_protein
+    source: process_global_protein/processed_global_protein
+  - id: phospho_protein
+    source: process_phospho_protein/processed_phospho_protein_file
+  - id: mrna_quant
+    source: mrna_quant
+  run: workflow-01-multiomic-prep-and-qc.steps/mogsa_prep_v2_1.cwl
+  out: []
+  sbg:x: 533.515625
+  sbg:y: 92.40625
+sbg:appVersion:
+- v1.2
+sbg:content_hash: a443f636dff7320025e94458da38100164884887e347e64b5e8aa96cd8f4516f3
+sbg:contributors:
+- david.roberson
+sbg:createdBy: david.roberson
+sbg:createdOn: 1634830218
+sbg:id: david.roberson/build-mogsa/mogsa-prep-v2/4
+sbg:image_url: |-
+  https://cgc.sbgenomics.com/ns/brood/images/david.roberson/build-mogsa/mogsa-prep-v2/4.png
+sbg:latestRevision: 4
+sbg:modifiedBy: david.roberson
+sbg:modifiedOn: 1634843078
+sbg:original_source: |-
+  https://cgc-api.sbgenomics.com/v2/apps/david.roberson/build-mogsa/mogsa-prep-v2/4/raw/
+sbg:project: david.roberson/build-mogsa
+sbg:projectName: BUILD MOGSA
+sbg:publisher: sbg
+sbg:revision: 4
+sbg:revisionNotes: ''
+sbg:revisionsInfo:
+- sbg:modifiedBy: david.roberson
+  sbg:modifiedOn: 1634830218
+  sbg:revision: 0
+  sbg:revisionNotes:
+- sbg:modifiedBy: david.roberson
+  sbg:modifiedOn: 1634830379
+  sbg:revision: 1
+  sbg:revisionNotes: ''
+- sbg:modifiedBy: david.roberson
+  sbg:modifiedOn: 1634842663
+  sbg:revision: 2
+  sbg:revisionNotes: testing dynamic expressions
+- sbg:modifiedBy: david.roberson
+  sbg:modifiedOn: 1634842790
+  sbg:revision: 3
+  sbg:revisionNotes: ''
+- sbg:modifiedBy: david.roberson
+  sbg:modifiedOn: 1634843078
+  sbg:revision: 4
+  sbg:revisionNotes: ''
+sbg:sbgMaintained: false
+sbg:validationErrors: []
