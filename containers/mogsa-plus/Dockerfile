@@ -15,5 +15,10 @@
 #RUN Rscript -e 'install.packages("VennDiagram")'
 #RUN Rscript -e 'install.packages("venn")'
 
-FROM cgc-images.sbgenomics.com/david.roberson/mogsa:21.06.16
-RUN Rscript -e 'BiocManager::install("mixOmics", update = F, ask = F)'
+#FROM cgc-images.sbgenomics.com/david.roberson/mogsa:21.06.16
+#RUN Rscript -e 'BiocManager::install("mixOmics", update = F, ask = F)'
+
+FROM cgc-images.sbgenomics.com/david.roberson/mogsa:21.07.28
+RUN Rscript -e 'BiocManager::install("edgeR", updated = F, ask = F)'
+RUN Rscript -e 'BiocManager::install("TCGAbiolinks", update = F, ask = F)'
+RUN Rscript -e 'BiocManager::install("biomaRt", update = F, ask = F)'
